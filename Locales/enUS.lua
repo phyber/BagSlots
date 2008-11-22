@@ -15,3 +15,6 @@ L["Text Position"] = true
 L["Change the position of the usage text on the bags."] = true
 L["Bottom"] = true
 L["Top"] = true
+-- Ammo Bag option
+L["Ammo Bags"] = true
+L["Show usage on Ammo Bags."] = true

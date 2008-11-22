@@ -13,6 +13,7 @@ local defaults = {
 		showDepletion = false,
 		showTotal = true,
 		textPosition = "BOTTOM",
+		onAmmoBags = false,
 	},
 }
 -- Names of the bag slots.
@@ -56,11 +57,22 @@ local function getOptions()
 					BagSlots:UpdateSlotCount()
 				end,
 			},
+			ammobags = {
+				name = L["Ammo Bags"],
+				desc = L["Show usage on Ammo Bags."],
+				type = "toggle",
+				order = 300,
+				get = function() return db.onAmmoBags end,
+				set = function()
+					db.onAmmoBags = not db.onAmmoBags
+					BagSlots:UpdateSlotCount()
+				end,
+			},
 			position = {
 				name = L["Text Position"],
 				desc = L["Change the position of the usage text on the bags."],
 				type = "select",
-				order = 300,
+				order = 400,
 				values = { BOTTOM = L["Bottom"], TOP = L["Top"] },
 				get = function()
 					return db.textPosition
@@ -117,6 +129,16 @@ function BagSlots:UpdateOverlay()
 	end	
 end
 
+local function IsAmmoBag(bagType)
+	-- 4: Soul Bag
+	-- 2: Ammo Pouch
+	-- 1: Quiver
+	if bagType == 4 or bagType == 2 or bagType == 1 then
+		return true
+	end
+	return false
+end
+
 function BagSlots:UpdateSlotCount()
 	for bag = 0, 4 do
 		local numSlots = GetContainerNumSlots(bag)
@@ -125,7 +147,7 @@ function BagSlots:UpdateSlotCount()
 			return
 		else
 			local slotsText
-			local freeSlots = GetContainerNumFreeSlots(bag)
+			local freeSlots, bagType = GetContainerNumFreeSlots(bag)
 			local usedSlots = numSlots - freeSlots
 			local bagslot = _G[bags[bag+1].."BagSlotsStr"]
 
@@ -144,7 +166,11 @@ function BagSlots:UpdateSlotCount()
 			end
 
 			-- Show the string :)
-			bagslot:SetText(slotsText)
+			if not db.onAmmoBags and IsAmmoBag(bagType) then
+				bagslot:SetText("")
+			else
+				bagslot:SetText(slotsText)
+			end
 		end
 	end
 end
