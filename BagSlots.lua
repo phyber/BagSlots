@@ -7,6 +7,7 @@ local ipairs = ipairs
 local GetContainerNumSlots = GetContainerNumSlots
 local GetContainerNumFreeSlots = GetContainerNumFreeSlots
 local fontSize = 12
+local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 -- Default options
 local defaults = {
 	profile = {
@@ -140,7 +141,7 @@ local function IsAmmoBag(bagType)
 end
 
 function BagSlots:UpdateSlotCount()
-	for bag = 0, 4 do
+	for bag = 0, NUM_BAG_SLOTS do
 		local numSlots = GetContainerNumSlots(bag)
 
 		if numSlots == 0 then
