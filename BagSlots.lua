@@ -30,6 +30,7 @@ local function getOptions()
 	local options = {
 		type = "group",
 		name = L["BagSlots"],
+		get = function(info) return db[info[#info]] end,
 		args = {
 			bsdesc = {
 				type = "description",
@@ -41,7 +42,6 @@ local function getOptions()
 				desc = L["Show depletion of bag slots."],
 				type = "toggle",
 				order = 100,
-				get = function() return db.showDepletion end,
 				set = function()
 					db.showDepletion = not db.showDepletion
 					BagSlots:UpdateSlotCount()
@@ -52,7 +52,6 @@ local function getOptions()
 				desc = L["Show total slots per bag."],
 				type = "toggle",
 				order = 200,
-				get = function() return db.showTotal end,
 				set = function()
 					db.showTotal = not db.showTotal
 					BagSlots:UpdateSlotCount()
@@ -63,7 +62,6 @@ local function getOptions()
 				desc = L["Show usage on Ammo Bags."],
 				type = "toggle",
 				order = 300,
-				get = function() return db.onAmmoBags end,
 				set = function()
 					db.onAmmoBags = not db.onAmmoBags
 					BagSlots:UpdateSlotCount()
@@ -75,9 +73,6 @@ local function getOptions()
 				type = "select",
 				order = 400,
 				values = { BOTTOM = L["Bottom"], TOP = L["Top"] },
-				get = function()
-					return db.textPosition
-				end,
 				set = function(info, v)
 					db.textPosition = v
 					BagSlots:UpdateOverlay()
