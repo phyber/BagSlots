@@ -37,7 +37,7 @@ local function getOptions()
 				order = 0,
 				name = L["Display bag usage on each of your bag slots."],
 			},
-			depletion = {
+			showDepletion = {
 				name = L["Show Depletion"],
 				desc = L["Show depletion of bag slots."],
 				type = "toggle",
@@ -47,7 +47,7 @@ local function getOptions()
 					BagSlots:UpdateSlotCount()
 				end,
 			},
-			total = {
+			showTotal = {
 				name = L["Show Total"],
 				desc = L["Show total slots per bag."],
 				type = "toggle",
@@ -57,7 +57,7 @@ local function getOptions()
 					BagSlots:UpdateSlotCount()
 				end,
 			},
-			ammobags = {
+			onAmmoBags = {
 				name = L["Ammo Bags"],
 				desc = L["Show usage on Ammo Bags."],
 				type = "toggle",
@@ -67,7 +67,7 @@ local function getOptions()
 					BagSlots:UpdateSlotCount()
 				end,
 			},
-			position = {
+			textPosition = {
 				name = L["Text Position"],
 				desc = L["Change the position of the usage text on the bags."],
 				type = "select",
