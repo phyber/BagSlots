@@ -91,7 +91,7 @@ function BagSlots:OnInitialize()
 	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(L["BagSlots"], getOptions)
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions(L["BagSlots"], L["BagSlots"])
 	-- Register chat command
-	self:RegisterChatCommand("bagslots", function() InterfaceOptionsFrame_OpenToCategory(LibStub("AceConfigDialog-3.0").BlizOptions["BagSlots"].frame) end)
+	self:RegisterChatCommand("bagslots", function() InterfaceOptionsFrame_OpenToCategory(L["BagSlots"]) end)
 	-- Prepare the overlay
 	BagSlots:UpdateOverlay()
 end
