@@ -14,7 +14,6 @@ local defaults = {
 		showDepletion = false,
 		showTotal = true,
 		textPosition = "BOTTOM",
-		onAmmoBags = false,
 	},
 }
 -- Names of the bag slots.
@@ -54,16 +53,6 @@ local function getOptions()
 				order = 200,
 				set = function()
 					db.showTotal = not db.showTotal
-					BagSlots:UpdateSlotCount()
-				end,
-			},
-			onAmmoBags = {
-				name = L["Ammo Bags"],
-				desc = L["Show usage on Ammo Bags."],
-				type = "toggle",
-				order = 300,
-				set = function()
-					db.onAmmoBags = not db.onAmmoBags
 					BagSlots:UpdateSlotCount()
 				end,
 			},
@@ -125,16 +114,6 @@ function BagSlots:UpdateOverlay()
 	end	
 end
 
-local function IsAmmoBag(bagType)
-	-- 4: Soul Bag
-	-- 2: Ammo Pouch
-	-- 1: Quiver
-	if bagType == 4 or bagType == 2 or bagType == 1 then
-		return true
-	end
-	return false
-end
-
 function BagSlots:UpdateSlotCount()
 	for bag = 0, NUM_BAG_SLOTS do
 		local numSlots = GetContainerNumSlots(bag)
@@ -145,10 +124,10 @@ function BagSlots:UpdateSlotCount()
 			local slotsText
 			local freeSlots, bagType = GetContainerNumFreeSlots(bag)
 			local usedSlots = numSlots - freeSlots
-			local bagslot = _G[bags[bag+1].."BagSlotsStr"]
+			local bagslot = _G[bags[bag + 1] .. "BagSlotsStr"]
 
 			-- Colour the string before we check for showDepletion
-			bagslot:SetTextColor(Crayon:GetThresholdColor(usedSlots/numSlots, 1, 0.8, 0.6, 0.4, 0.2))
+			bagslot:SetTextColor(Crayon:GetThresholdColor(usedSlots / numSlots, 1, 0.8, 0.6, 0.4, 0.2))
 
 			if db.showDepletion then
 				usedSlots = numSlots - usedSlots
@@ -156,17 +135,13 @@ function BagSlots:UpdateSlotCount()
 
 			-- Decide what our string will be
 			if db.showTotal then
-				slotsText = usedSlots.."/"..numSlots
+				slotsText = usedSlots .. "/" .. numSlots
 			else
 				slotsText = usedSlots
 			end
 
 			-- Show the string :)
-			if not db.onAmmoBags and IsAmmoBag(bagType) then
-				bagslot:SetText("")
-			else
-				bagslot:SetText(slotsText)
-			end
+			bagslot:SetText(slotsText)
 		end
 	end
 end
