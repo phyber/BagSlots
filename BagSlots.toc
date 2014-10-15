@@ -1,4 +1,4 @@
-## Interface: 50400
+## Interface: 60000
 ## Author: phyber
 ## Title: BagSlots
 ## Title-zhCN: 背包状态 BagSlots
