@@ -1,4 +1,8 @@
-﻿local BagSlots = LibStub("AceAddon-3.0"):NewAddon("BagSlots", "AceBucket-3.0", "AceConsole-3.0")
+local BagSlots = LibStub("AceAddon-3.0"):NewAddon(
+	"BagSlots",
+	"AceBucket-3.0",
+	"AceConsole-3.0"
+)
 local L = LibStub("AceLocale-3.0"):GetLocale("BagSlots")
 local Crayon = LibStub("LibCrayon-3.0")
 local db -- Filled in later
@@ -77,10 +81,18 @@ function BagSlots:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("BagSlotsDB", defaults, "Default")
 	db = self.db.profile
 	-- Register our options
-	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(L["BagSlots"], getOptions)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions(L["BagSlots"], L["BagSlots"])
+	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(
+		L["BagSlots"],
+		getOptions
+	)
+	LibStub("AceConfigDialog-3.0"):AddToBlizOptions(
+		L["BagSlots"],
+		L["BagSlots"]
+	)
 	-- Register chat command
-	self:RegisterChatCommand("bagslots", function() InterfaceOptionsFrame_OpenToCategory(L["BagSlots"]) end)
+	self:RegisterChatCommand("bagslots", function()
+		InterfaceOptionsFrame_OpenToCategory(L["BagSlots"])
+	end)
 	-- Prepare the overlay
 	BagSlots:UpdateOverlay()
 end
@@ -105,13 +117,28 @@ function BagSlots:UpdateOverlay()
 	for _, bag in ipairs(bags) do
 		local BagSlot = _G[bag]
 		if not _G[bag.."BagSlotsStr"] then
-			local BPStr = BagSlot:CreateFontString(bag.."BagSlotsStr", "OVERLAY")
+			local BPStr = BagSlot:CreateFontString(
+				bag.."BagSlotsStr",
+				"OVERLAY"
+			)
 			BPStr:SetFont(font, fontSize, flags)
-			BPStr:SetPoint("CENTER", BagSlot, db.textPosition, 0, bottom and 6 or -6)
+			BPStr:SetPoint(
+				"CENTER",
+				BagSlot,
+				db.textPosition,
+				0,
+				bottom and 6 or -6
+			)
 		else
-			_G[bag.."BagSlotsStr"]:SetPoint("CENTER", BagSlot, db.textPosition, 0, bottom and 6 or -6)
+			_G[bag.."BagSlotsStr"]:SetPoint(
+				"CENTER",
+				BagSlot,
+				db.textPosition,
+				0,
+				bottom and 6 or -6
+			)
 		end
-	end	
+	end
 end
 
 function BagSlots:UpdateSlotCount()
@@ -127,7 +154,16 @@ function BagSlots:UpdateSlotCount()
 			local bagslot = _G[bags[bag + 1] .. "BagSlotsStr"]
 
 			-- Colour the string before we check for showDepletion
-			bagslot:SetTextColor(Crayon:GetThresholdColor(usedSlots / numSlots, 1, 0.8, 0.6, 0.4, 0.2))
+			bagslot:SetTextColor(
+				Crayon:GetThresholdColor(
+					usedSlots / numSlots,
+					1,
+					0.8,
+					0.6,
+					0.4,
+					0.2
+				)
+			)
 
 			if db.showDepletion then
 				usedSlots = numSlots - usedSlots
