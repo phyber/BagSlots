@@ -171,7 +171,7 @@ function BagSlots:UpdateSlotCount()
 
 			-- Decide what our string will be
 			if db.showTotal then
-				slotsText = usedSlots .. "/" .. numSlots
+				slotsText = ("%d/%d"):format(usedSlots, numSlots)
 			else
 				slotsText = usedSlots
 			end
