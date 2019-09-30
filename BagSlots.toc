@@ -1,4 +1,4 @@
-## Interface: 80205-1
+## Interface: 80205
 ## Author: phyber
 ## Title: BagSlots
 ## Title-zhCN: 背包状态 BagSlots
