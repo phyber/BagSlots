@@ -12,6 +12,7 @@ local GetContainerNumSlots = GetContainerNumSlots
 local GetContainerNumFreeSlots = GetContainerNumFreeSlots
 local fontSize = 12
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
+local addonOptionsFrameName
 
 -- Default options
 local defaults = {
@@ -78,7 +79,17 @@ local function getOptions()
     return options
 end
 
+local function openOptions()
+    if Settings and Settings.OpenToCategory then
+        Settings.OpenToCategory(addonOptionsFrameName)
+    else
+        InterfaceOptionsFrame_OpenToCategory(L["BagSlots"])
+    end
+end
+
 function BagSlots:OnInitialize()
+    local _
+
     -- Grab our DB
     self.db = LibStub("AceDB-3.0"):New("BagSlotsDB", defaults, "Default")
     db = self.db.profile
@@ -88,15 +99,14 @@ function BagSlots:OnInitialize()
         L["BagSlots"],
         getOptions
     )
-    LibStub("AceConfigDialog-3.0"):AddToBlizOptions(
+
+    _, addonOptionsFrameName = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(
         L["BagSlots"],
         L["BagSlots"]
     )
 
     -- Register chat command
-    self:RegisterChatCommand("bagslots", function()
-        InterfaceOptionsFrame_OpenToCategory(L["BagSlots"])
-    end)
+    self:RegisterChatCommand("bagslots", openOptions)
 
     -- Prepare the overlay
     BagSlots:UpdateOverlay()
